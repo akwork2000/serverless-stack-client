@@ -1,4 +1,6 @@
 export default {
+    MAX_ATTACHMENT_SIZE: 5000000,
+    STRIPE_KEY: "pk_test_DBQzyMigN4iHNGAHjdFlGXe800Lz07tJao",
     s3: {
       REGION: "us-east-2",
       BUCKET: "akwork-notes-upload"
