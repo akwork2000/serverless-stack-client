@@ -47,7 +47,7 @@ export default function Home() {
         <LinkContainer key="new" to="/notes/new">
           <ListGroupItem>
             <h4>
-              <b>{"\uFF0B"}</b> Create a new note
+              <b>{"\uFF0B"}</b> Create a new practice session 
             </h4>
           </ListGroupItem>
         </LinkContainer>
@@ -58,7 +58,7 @@ export default function Home() {
   function renderLander() {
     return (
       <div className="lander">
-        <h1>Scratch</h1>
+        <h1>Opus 13</h1>
         <p>A simple note taking app</p>
       </div>
     );
@@ -67,7 +67,7 @@ export default function Home() {
   function renderNotes() {
     return (
       <div className="notes">
-        <PageHeader>Your Notes</PageHeader>
+        <PageHeader>Your Practices</PageHeader>
         <ListGroup>
           {!isLoading && renderNotesList(notes)}
         </ListGroup>

@@ -6,3 +6,37 @@
     height: 300px;
     font-size: 24px;
   }
+
+  .parent {
+    display: flex;
+    flex-direction:row;
+  }
+  
+  .column {
+    flex: 1 1 0px;
+    border: 0px solid black;
+  }
+
+  .Metronome {
+    margin-right: 30px;
+    padding: 20px;
+    width: 700px;
+    background-color: white;
+    box-shadow: 0 0 1PX;
+  }
+  .Metronome-header {
+    font-size: 40px;
+    font-weight: bold;
+  }
+  .Metronome-details {
+    font-size: 30px;
+    font-weight: bold;
+    color: cadetblue;
+  }
+  .Metronome-button {
+    width: 50;
+    border: solid 1px transparent;
+    border-radius: 4px;
+    padding: 0px 40px;
+    font-size: 20px;
+  }

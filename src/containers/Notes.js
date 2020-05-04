@@ -16,6 +16,8 @@ export default function Notes() {
   const [content, setContent] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [practiceType, setPracticeType] = useState("Technique");
+  const [practiceTime, SetPracticeTime] = useState(0);
 
   useEffect(() => {
     function loadNote() {
@@ -25,7 +27,7 @@ export default function Notes() {
     async function onLoad() {
       try {
         const note = await loadNote();
-        const { content, attachment } = note;
+        const { practiceType, practiceTime, content, attachment } = note;
 
         if (attachment) {
           note.attachmentURL = await Storage.vault.get(attachment);
@@ -33,6 +35,8 @@ export default function Notes() {
 
         setContent(content);
         setNote(note);
+        setPracticeType(practiceType);
+        SetPracticeTime(practiceTime);
       } catch (e) {
         onError(e);
       }
@@ -53,6 +57,10 @@ export default function Notes() {
     file.current = event.target.files[0];
   }
   
+  function handleTypeChange(event) {
+    setPracticeType(event.target.value)
+  }
+
   function saveNote(note) {
     return API.put("notes", `/notes/${id}`, {
       body: note
@@ -82,7 +90,9 @@ export default function Notes() {
   
       await saveNote({
         content,
-        attachment: attachment || note.attachment
+        attachment: attachment || note.attachment,
+        practiceType,
+        practiceTime
       });
       history.push("/");
     } catch (e) {
@@ -121,6 +131,13 @@ export default function Notes() {
     <div className="Notes">
       {note && (
         <form onSubmit={handleSubmit}>
+          <fieldset>
+            <ControlLabel style={{ marginRight: '2rem' }}>I am working on :</ControlLabel>{" "}
+            <label style={{ marginRight: '2rem' }}> Technique <input type="radio" name="Technique" value="Technique" checked={practiceType === "Technique"} onChange={handleTypeChange} /> </label> {}
+            <label style={{ marginRight: '2rem' }}> Repertoir Piece <input type="radio" name="Repertoir Piece" value="Repertoir Piece" checked={practiceType === "Repertoir Piece"} onChange={handleTypeChange} /> </label> {}
+            <label style={{ marginRight: '2rem' }}> Musicianship <input type="radio" name="Musicianship" value="Musicianship" checked={practiceType === "Musicianship"} onChange={handleTypeChange} /> </label> {}
+            <label style={{ marginLeft: '15rem' }}> Practice Time: <input type="number" name="PracticeTime" value={practiceTime} onChange={e => SetPracticeTime(e.target.value)}/> </label> {"mins"}
+          </fieldset>
           <FormGroup controlId="content">
             <FormControl
               value={content}
