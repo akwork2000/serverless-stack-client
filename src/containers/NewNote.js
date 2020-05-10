@@ -91,7 +91,7 @@ export default function NewNote() {
   }
 
   function handleTimerTimeChange(timerTime){
-    SetPracticeTime(Math.ceil(timerTime/60000))
+    SetPracticeTime(parseInt(Math.ceil(timerTime/60000)))
   }
  
   return (
@@ -102,7 +102,7 @@ export default function NewNote() {
       <label style={{ marginRight: '2rem' }}> Technique <input type="radio" name="Technique" value="Technique" checked={practiceType === "Technique"} onChange={handleTypeChange} /> </label> {}
       <label style={{ marginRight: '2rem' }}> Repertoir Piece <input type="radio" name="Repertoir Piece" value="Repertoir Piece" checked={practiceType === "Repertoir Piece"} onChange={handleTypeChange} /> </label> {}
       <label style={{ marginRight: '2rem' }}> Musicianship <input type="radio" name="Musicianship" value="Musicianship" checked={practiceType === "Musicianship"} onChange={handleTypeChange} /> </label> {}
-      <label style={{ marginLeft: '15rem' }}> Practice Time: <input type="number" name="PracticeTime" value={practiceTime} onChange={e => SetPracticeTime(e.target.value)}/> </label> {"mins"}
+      <label style={{ marginLeft: '15rem' }}> Practice Time: <input type="number" name="PracticeTime" value={practiceTime} onChange={e => SetPracticeTime(parseInt(e.target.value))}/> </label> {"mins"}
       </fieldset>
         
         <FormGroup controlId="content">

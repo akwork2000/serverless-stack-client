@@ -18,6 +18,8 @@ export default function Notes() {
   const [isDeleting, setIsDeleting] = useState(false);
   const [practiceType, setPracticeType] = useState("Technique");
   const [practiceTime, SetPracticeTime] = useState(0);
+  const [oldpTime, SetOldpTime] = useState(0);
+  const [createdAt, SetCreatedAt] = useState(0);
 
   useEffect(() => {
     function loadNote() {
@@ -27,16 +29,18 @@ export default function Notes() {
     async function onLoad() {
       try {
         const note = await loadNote();
-        const { practiceType, practiceTime, content, attachment } = note;
+        const { practiceType, practiceTime, content, createdAt, attachment } = note;
 
         if (attachment) {
           note.attachmentURL = await Storage.vault.get(attachment);
         }
 
         setContent(content);
-        setNote(note);
         setPracticeType(practiceType);
         SetPracticeTime(practiceTime);
+        SetOldpTime(createdAt);
+        SetCreatedAt(createdAt);
+        setNote(note);
       } catch (e) {
         onError(e);
       }
@@ -92,7 +96,9 @@ export default function Notes() {
         content,
         attachment: attachment || note.attachment,
         practiceType,
-        practiceTime
+        practiceTime,
+        createdAt,
+        oldpTime,
       });
       history.push("/");
     } catch (e) {
@@ -101,8 +107,10 @@ export default function Notes() {
     }
   }
   
-  function deleteNote() {
-    return API.del("notes", `/notes/${id}`);
+  function deleteNote(note) {
+    return API.del("notes", `/notes/${id}`, {
+      body: note
+    });
   }
   
   async function handleDelete(event) {
@@ -119,7 +127,10 @@ export default function Notes() {
     setIsDeleting(true);
   
     try {
-      await deleteNote();
+      await deleteNote({
+        createdAt,
+        oldpTime,
+      });
       history.push("/");
     } catch (e) {
       onError(e);
@@ -136,7 +147,7 @@ export default function Notes() {
             <label style={{ marginRight: '2rem' }}> Technique <input type="radio" name="Technique" value="Technique" checked={practiceType === "Technique"} onChange={handleTypeChange} /> </label> {}
             <label style={{ marginRight: '2rem' }}> Repertoir Piece <input type="radio" name="Repertoir Piece" value="Repertoir Piece" checked={practiceType === "Repertoir Piece"} onChange={handleTypeChange} /> </label> {}
             <label style={{ marginRight: '2rem' }}> Musicianship <input type="radio" name="Musicianship" value="Musicianship" checked={practiceType === "Musicianship"} onChange={handleTypeChange} /> </label> {}
-            <label style={{ marginLeft: '15rem' }}> Practice Time: <input type="number" name="PracticeTime" value={practiceTime} onChange={e => SetPracticeTime(e.target.value)}/> </label> {"mins"}
+            <label style={{ marginLeft: '15rem' }}> Practice Time: <input type="number" name="PracticeTime" value={practiceTime} onChange={e => SetPracticeTime(parseInt(e.target.value))}/> </label> {"mins"}
           </fieldset>
           <FormGroup controlId="content">
             <FormControl

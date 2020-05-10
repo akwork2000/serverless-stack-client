@@ -8,6 +8,7 @@ import Signup from "./containers/Signup";
 import NewNote from "./containers/NewNote";
 import Notes from "./containers/Notes";
 import Settings from "./containers/Settings";
+import Analytics from "./containers/Analytics"
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 
@@ -25,6 +26,9 @@ export default function Routes() {
       </UnauthenticatedRoute>
       <AuthenticatedRoute exact path="/settings">
         <Settings />
+      </AuthenticatedRoute>
+      <AuthenticatedRoute exact path="/analytics">
+        <Analytics />
       </AuthenticatedRoute>
       <AuthenticatedRoute exact path="/notes/new">
         <NewNote />
