@@ -7,6 +7,21 @@ import LoaderButton from "../components/LoaderButton";
 import config from "../config";
 import "./Notes.css";
 import { s3Upload } from "../libs/awsLib";
+import styled from 'styled-components'
+
+const Header = styled.header`
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-variant-numeric: tabular-nums;
+  & small {
+    color: rgba(95, 158, 160, 0.7);
+    text-transform: uppercase;
+    font-size: 1.5rem;
+  }
+  `
 
 export default function Notes() {
   const file = useRef(null);
@@ -38,7 +53,7 @@ export default function Notes() {
         setContent(content);
         setPracticeType(practiceType);
         SetPracticeTime(practiceTime);
-        SetOldpTime(createdAt);
+        SetOldpTime(practiceTime);
         SetCreatedAt(createdAt);
         setNote(note);
       } catch (e) {
@@ -142,13 +157,28 @@ export default function Notes() {
     <div className="Notes">
       {note && (
         <form onSubmit={handleSubmit}>
+          <Header>
           <fieldset>
+          <ControlLabel style={{ marginRight: '1rem', fontSize: '14px'} }>I am working on </ControlLabel>
+          <select style={{ fontSize: '15px'}} value={practiceType} onChange={handleTypeChange}>
+            <option value="Technique">{'Technique'}</option>
+            <option value="Repertoire Piece">{'Repertoire'}</option>
+            <option value="Old Repertoire Piece">{'Old Repertoire Piece'}</option>
+            <option value="Musicianship">{'Musicianship'}</option>
+          </select>
+          </fieldset>
+          <fieldset>
+            <ControlLabel style={{ marginRight: '1rem', fontSize: '14px' }}>Practice Time (mins)</ControlLabel>
+            <input type="number" name="PracticeTime" value={practiceTime} onChange={e => SetPracticeTime(parseInt(e.target.value))}/>  
+          </fieldset>
+          </Header>
+          {/* <fieldset>
             <ControlLabel style={{ marginRight: '2rem' }}>I am working on :</ControlLabel>{" "}
             <label style={{ marginRight: '2rem' }}> Technique <input type="radio" name="Technique" value="Technique" checked={practiceType === "Technique"} onChange={handleTypeChange} /> </label> {}
-            <label style={{ marginRight: '2rem' }}> Repertoir Piece <input type="radio" name="Repertoir Piece" value="Repertoir Piece" checked={practiceType === "Repertoir Piece"} onChange={handleTypeChange} /> </label> {}
+            <label style={{ marginRight: '2rem' }}> Repertoire Piece <input type="radio" name="Repertoire Piece" value="Repertoir Piece" checked={practiceType === "Repertoir Piece"} onChange={handleTypeChange} /> </label> {}
             <label style={{ marginRight: '2rem' }}> Musicianship <input type="radio" name="Musicianship" value="Musicianship" checked={practiceType === "Musicianship"} onChange={handleTypeChange} /> </label> {}
             <label style={{ marginLeft: '15rem' }}> Practice Time: <input type="number" name="PracticeTime" value={practiceTime} onChange={e => SetPracticeTime(parseInt(e.target.value))}/> </label> {"mins"}
-          </fieldset>
+          </fieldset> */}
           <FormGroup controlId="content">
             <FormControl
               value={content}

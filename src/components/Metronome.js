@@ -236,6 +236,8 @@ class Metronome extends React.Component {
 
   start = () => {
     this.currentBeat = 0
+    this.audioContext.resume();
+    //this.audioContext = new (window.AudioContext || window.webkitAudioContext)()
     this.nextNoteTime = this.audioContext.currentTime
 
     this.timerWorker.postMessage({

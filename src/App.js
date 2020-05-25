@@ -39,7 +39,7 @@ function App() {
   return (
     !isAuthenticating && (
       <div className="App container">
-        <Navbar fluid collapseOnSelect>
+        <Navbar fluid collapseOnSelect style={{backgroundColor:'#F7C331', fontSize: '18px', fontWeight:'bold'} /* citrus color */}>
           <Navbar.Header>
             <Navbar.Brand>
               <Link to="/">Opus 13</Link>
@@ -48,17 +48,17 @@ function App() {
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav pullRight>
-              {isAuthenticated ? (
-                <>
+              {isAuthenticated ? [
+                
                   <LinkContainer to="/analytics">
                     <NavItem>Analytics</NavItem>
-                  </LinkContainer>
-                  <LinkContainer to="/settings">
+                  </LinkContainer>,
+                  /*<LinkContainer to="/settings">
                     <NavItem>Settings</NavItem>
-                  </LinkContainer>
+                  </LinkContainer>,*/
                   <NavItem onClick={handleLogout}>Logout</NavItem>
-                </>
-              ) : (
+                
+              ] : (
                 <>
                   <LinkContainer to="/signup">
                     <NavItem>Signup</NavItem>

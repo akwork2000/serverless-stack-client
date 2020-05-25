@@ -6,3 +6,10 @@
     height: 300px;
     font-size: 24px;
   }
+
+  @media (max-width: 1000px) {
+    .Notes form textarea {
+      height: 100px;
+      font-size: 18px;
+    }
+  }

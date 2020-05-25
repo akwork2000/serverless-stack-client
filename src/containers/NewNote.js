@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { FormGroup, FormControl, ControlLabel, DropdownButton, MenuItem } from "react-bootstrap";
+import { FormGroup, FormControl, ControlLabel, DropdownButton, MenuItem, Row, Col  } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 import { onError } from "../libs/errorLib";
 import config from "../config";
@@ -16,7 +16,7 @@ import MdPause from 'react-icons/lib/md/pause'
 
 const Header = styled.header`
   width: 100%;
-  padding: 20px;
+  padding: 10px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -24,7 +24,7 @@ const Header = styled.header`
   & small {
     color: rgba(95, 158, 160, 0.7);
     text-transform: uppercase;
-    font-size: 1rem;
+    font-size: 1.5rem;
   }
   `
 
@@ -97,14 +97,21 @@ export default function NewNote() {
   return (
     <div className="NewNote">
       <form onSubmit={handleSubmit}>
-      <fieldset>
-      <ControlLabel style={{ marginRight: '2rem' }}>I am working on :</ControlLabel>{" "}
-      <label style={{ marginRight: '2rem' }}> Technique <input type="radio" name="Technique" value="Technique" checked={practiceType === "Technique"} onChange={handleTypeChange} /> </label> {}
-      <label style={{ marginRight: '2rem' }}> Repertoir Piece <input type="radio" name="Repertoir Piece" value="Repertoir Piece" checked={practiceType === "Repertoir Piece"} onChange={handleTypeChange} /> </label> {}
-      <label style={{ marginRight: '2rem' }}> Musicianship <input type="radio" name="Musicianship" value="Musicianship" checked={practiceType === "Musicianship"} onChange={handleTypeChange} /> </label> {}
-      <label style={{ marginLeft: '15rem' }}> Practice Time: <input type="number" name="PracticeTime" value={practiceTime} onChange={e => SetPracticeTime(parseInt(e.target.value))}/> </label> {"mins"}
-      </fieldset>
-        
+        <Header>
+        <fieldset>
+          <ControlLabel style={{ marginRight: '1rem', fontSize: '14px'} }>I am working on </ControlLabel>
+          <select style={{ fontSize: '15px'}} value={practiceType} onChange={handleTypeChange}>
+            <option value="Technique">{'Technique'}</option>
+            <option value="Repertoire Piece">{'Repertoire'}</option>
+            <option value="Old Repertoire Piece">{'Old Repertoire Piece'}</option>
+            <option value="Musicianship">{'Musicianship'}</option>
+          </select>
+        </fieldset>
+        <fieldset>
+          <ControlLabel style={{ marginRight: '1rem', fontSize: '14px' }}>Practice Time (mins)</ControlLabel>
+          <input type="number" name="PracticeTime" value={practiceTime} onChange={e => SetPracticeTime(parseInt(e.target.value))}/>  
+        </fieldset>
+        </Header>
         <FormGroup controlId="content">
           <FormControl
             value={content}
@@ -112,12 +119,16 @@ export default function NewNote() {
             onChange={e => setContent(e.target.value)}
           />
         </FormGroup>
-        <FormGroup >
-        <div class="parent">
-        <div class="column">
+        
+        <div class="Timers">
+        
+        
+        
           <Stopwatch callbackTimerTimeChange={handleTimerTimeChange.bind(this)}/>
-        </div>
-        <div class="column" >
+        
+        
+        
+        
             <Metronome
                 tempo={60}
                 subdivision={4}
@@ -137,25 +148,26 @@ export default function NewNote() {
                     <div className="Metronome-header">Metronome</div>
                     <div className="Metronome-details">
                     <Header> 
-                    {tempo} <small>BPM</small>
-                    <select value={beatsPerMeasure} onChange={event => onTSChange(event.target.value)}>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                    </select>
-                    {beatsPerMeasure}/4 <small>T.S.</small>
-                    <small>SUB DIV</small>
-                    <select value={subdivision} onChange={event => onSubDivChange(event.target.value)}>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                    </select>
+                      <select value={beatsPerMeasure} onChange={event => onTSChange(event.target.value)}>
+                        <option value="1">1/4</option>
+                        <option value="2">2/4</option>
+                        <option value="3">3/4</option>
+                        <option value="4">4/4</option>
+                      </select>{' '}
+                      <small>T.S.</small>
+                      <select value={subdivision} onChange={event => onSubDivChange(event.target.value)}>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                      </select>
+                      <small>Sub Div</small>
                     </Header> 
+                    
                     </div>
                     
-                    <Main>
+                    
+                    <Header>
                     <input
                         type="range"
                         min={40}
@@ -163,17 +175,24 @@ export default function NewNote() {
                         value={tempo}
                         onChange={event => onTempoChange(event.target.value)}
                     />
-                    </Main>
-                    <div >
-                    {beat}/{beatsPerMeasure}  <button className="Metronome-button" type="button" onClick={onPlay}>{playing ? 'Pause' : 'Play'}</button>
+                    
+                    </Header>
+                    <div className="Metronome-details">
+                    <Header align={'left'}>
+                    <medium>{tempo} BPM </medium> 
+                    <medium>{beat}/{beatsPerMeasure} </medium>
+                    
+                    <button className="Metronome-button" type="button" onClick={onPlay}>{playing ? 'Pause' : 'Play'}</button>
+                    </Header>
                     </div>
-                   
                 </div>
                 )}
             />
+        
+        
         </div>
-        </div>
-        </FormGroup>
+       
+        
         <FormGroup controlId="file">
           <ControlLabel>Attachment</ControlLabel>
           <FormControl onChange={handleFileChange} type="file" />

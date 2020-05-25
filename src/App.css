@@ -1,7 +1,13 @@
 .App {
   margin-top: 15px;
+  /*background-color:#F7C331;  /*f1f1f1 //soft wheat #dfd8c8;*/
 }
 
 .App .navbar-brand {
   font-weight: bold;
+}
+
+html {
+  --primary-color: #282c34;
+  --secondary-color:#fff;
 }

@@ -19,7 +19,7 @@ export default function Home() {
       if (!isAuthenticated) {
         return;
       }
-  
+
       try {
         const notes = await loadNotes();
         notes.sort(GetSortOrder("createdAt"));
@@ -63,7 +63,7 @@ export default function Home() {
           </ListGroupItem>
         </LinkContainer> 
       ) : (
-        <LinkContainer key="new" to="/notes/new">
+        <LinkContainer key="new" to="/notes/new" style={{backgroundColor:'#F7C331'}}>
           <ListGroupItem>
             <h4>
               <b>{"\uFF0B"}</b> Create a new practice session 
@@ -78,7 +78,7 @@ export default function Home() {
     return (
       <div className="lander">
         <h1>Opus 13</h1>
-        <p>A simple note taking app</p>
+        <p>A practice tracking app</p>
       </div>
     );
   }
